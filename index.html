@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blank Page</title>
+
+    <!-- SEO & Link Preview -->
+    <meta property="og:title" content="Blank Page">
+    <meta property="og:description" content="A blank page with hidden depths.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/FFFFFF/000000?text=Blank+Page">
+    <meta property="og:type" content="website">
+
+    <style>
+        * { margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #ffffff;
+            color: #000000;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            text-align: center;
+            user-select: none;
+            cursor: default;
+        }
+
+        .ca {
+            font-size: 14px;
+            opacity: 0.85;
+            animation: pulse 6s infinite;
+            transition: opacity 0.5s;
+        }
+
+        @keyframes pulse {
+            0%,100% { opacity: 0.85; }
+            50% { opacity: 1; }
+        }
+
+        .hidden-msg {
+            margin-top: 12px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.6s, transform 0.3s;
+        }
+
+        .grow {
+            transform: scale(1.15);
+        }
+
+        /* glitch flash */
+        .glitch {
+            background: #000;
+            color: #fff;
+        }
+
+        /* buttons */
+        .copy-btn, .dark-btn {
+            position: fixed;
+            font-size: 13px;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0.75;
+            background: #e0e0e0;
+        }
+        .copy-btn { right: 12px; bottom: 12px; }
+        .dark-btn { right: 12px; top: 12px; }
+        .copy-btn:hover, .dark-btn:hover { opacity: 1; }
+    </style>
+</head>
+<body onclick="revealMessage()">
+
+<button class="dark-btn" onclick="toggleDark(event)">Dark</button>
+
+<div class="container">
+    <p class="ca" id="ca">2uNSf5hCQPTEeYocFdB53RfxASgq1g2uszEk5aFKpump</p>
+    <p class="hidden-msg" id="hidden"></p>
+</div>
+
+<button class="copy-btn" onclick="copyCA()">Copy CA</button>
+
+<script>
+let taps = 0;
+
+const levelMessages = {
+    1: [
+        "The blank stares back.",
+        "Silence has a message.",
+        "Hidden in plain sight.",
+        "Some secrets are barely visible.",
+        "Nothingness is everything."
+    ],
+    2: [
+        "You weren’t supposed to see this.",
+        "This emptiness is intentional.",
+        "Not everyone finds this place.",
+        "You’re going deeper.",
+        "Do you feel watched?"
+    ],
+    3: [
+        "It’s reading you too.",
+        "The page remembers.",
+        "You uncovered the void.",
+        "Absence speaks louder.",
+        "How far will you go?"
+    ],
+    4: [
+        "You’re being measured.",
+        "The hidden systems woke up.",
+        "Who sent you?",
+        "You think you're in control?",
+        "This is no longer a blank page."
+    ],
+    5: [
+        "You’ve gone further than most.",
+        "The void sees you.",
+        "Stop… or continue?",
+        "The final message is already inside you.",
+        "Welcome to the other side."
+    ]
+};
+
+function getLevel() {
+    if (taps >= 15) return 5;
+    if (taps >= 10) return 4;
+    if (taps >= 6) return 3;
+    if (taps >= 3) return 2;
+    return 1;
+}
+
+function revealMessage() {
+    taps++;
+    const level = getLevel();
+    const pool = levelMessages[level];
+    const msg = document.getElementById("hidden");
+
+    msg.innerText = pool[Math.floor(Math.random() * pool.length)];
+    msg.style.opacity = 1;
+
+    msg.classList.remove("grow");
+    void msg.offsetWidth; // reset animation
+    msg.classList.add("grow");
+
+    glitchEffect();
+}
+
+function glitchEffect() {
+    const body = document.body;
+    const ca = document.getElementById("ca");
+
+    body.classList.add("glitch");
+    ca.style.opacity = 0.4;
+
+    setTimeout(() => {
+        body.classList.remove("glitch");
+        ca.style.opacity = 1;
+    }, 120);
+}
+
+function copyCA() {
+    const ca = document.getElementById("ca").innerText;
+    navigator.clipboard.writeText(ca);
+    alert("Copied ✅");
+}
+
+function toggleDark(e) {
+    e.stopPropagation();
+    const b = document.body;
+    if (b.style.background === "black") {
+        b.style.background = "white";
+        b.style.color = "black";
+    } else {
+        b.style.background = "black";
+        b.style.color = "white";
+    }
+}
+</script>
+
+</body>
+</html>
